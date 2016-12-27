@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="15dp">
+
+  <android.support.v7.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      card_view:cardCornerRadius="4dp"
+      card_view:cardElevation="4dp"
+      card_view:contentPadding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+      <!--* @param status status of the order (pending, delivered, not delivered, partially delivered)
+          * @param orderID identifies the shipment order.
+          * @param contactName name of the contact associated to the order
+          * @param contactAddress address of the contact associated to the order
+          * @param tagLabel custom field label set by the user in the webapp
+          * @param tagColor custom color of the custom field set by the user in the webapp
+          * @param orderMode mode of the order is 'normal', 'pick up only' or 'pick up and delivery'
+          * @param isScheduled true if the order has scheduled delivery time
+          * @param isLocked true if the order has been blocked in the webapp
+          * @param isTrunk the order can be 'last mile' or 'trunk'-->
+
+      <TextView
+          android:id="@+id/order_id"
+          style="@style/Base.TextAppearance.AppCompat.Title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="123435434"/>
+
+      <TextView
+          android:id="@+id/contact_name"
+          style="@style/TextAppearance.AppCompat.Body2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="nombre"/>
+
+      <TextView
+          android:id="@+id/contact_address"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="dirección"/>
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content">
+
+          <ImageView
+              android:id="@+id/order_mode"
+              android:layout_width="24dp"
+              android:layout_height="24dp"
+              android:layout_marginRight="5dp"
+              app:src="@drawable/ic_default"/>
+
+
+          <ImageView
+              android:id="@+id/locked"
+              android:layout_width="22dp"
+              android:layout_height="22dp"
+              android:layout_marginRight="5dp"
+              app:src="@drawable/ic_locked"/>
+
+
+          <ImageView
+              android:id="@+id/scheduled"
+              android:layout_width="22dp"
+              android:layout_height="22dp"
+              android:layout_marginRight="5dp"
+              app:src="@drawable/ic_scheduled"/>
+
+          <ImageView
+              android:id="@+id/trunk"
+              android:layout_width="22dp"
+              android:layout_height="22dp"
+              android:layout_marginRight="5dp"
+              app:src="@drawable/ic_trunk"/>
+
+          <ImageView
+              android:id="@+id/synced"
+              android:layout_width="24dp"
+              android:layout_height="24dp"
+              android:layout_marginRight="5dp"
+              app:src="@drawable/ic_synced"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/custom_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="3dp"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="3dp"
+            android:text="label"
+            android:textColor="@android:color/white"/>
+
+
+
+      </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+  </android.support.v7.widget.CardView>
+
+</LinearLayout>
