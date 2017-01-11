@@ -3,15 +3,18 @@ package com.za.abar.reorder.recycler.reorderrecyclerview.holders;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.za.abar.reorder.recycler.reorderrecyclerview.MainActivity;
 import com.za.abar.reorder.recycler.reorderrecyclerview.R;
 import com.za.abar.reorder.recycler.reorderrecyclerview.models.OrderData;
+import com.za.abar.reorder.recycler.reorderrecyclerview.utilities.ItemTouchHelperViewHolder;
+
 
 import static android.support.v4.content.ContextCompat.getColor;
 
@@ -19,32 +22,38 @@ import static android.support.v4.content.ContextCompat.getColor;
  * Created by abarza on 27-12-16.
  */
 
-public class OrderHolder extends RecyclerView.ViewHolder {
+public class OrderHolder
+    extends RecyclerView.ViewHolder
+    implements ItemTouchHelperViewHolder{
 
-  private TextView orderId;
-  private TextView contactName;
-  private TextView contactAddress;
-  private TextView customLabel;
-  private ImageView orderMode;
-  private ImageView orderLocked;
-  private ImageView orderScheduled;
-  private ImageView orderTrunk;
-  private ImageView orderSynced;
-  private Context context;
+  private TextView mOrderId;
+  private TextView mContactName;
+  private TextView mContactAddress;
+  private TextView mCustomLabel;
+  private ImageView mOrderMode;
+  private ImageView mOrderLocked;
+  private ImageView mOrderScheduled;
+  private ImageView mOrderTrunk;
+  private ImageView mOrderSynced;
+  private Context mContext;
+  private final CardView mCardView;
+  public final ImageView mReorder;
 
   public OrderHolder(View itemView) {
     super(itemView);
 
-    this.orderId = (TextView) itemView.findViewById(R.id.order_id);
-    this.contactName = (TextView) itemView.findViewById(R.id.contact_name);
-    this.contactAddress = (TextView) itemView.findViewById(R.id.contact_address);
-    this.customLabel = (TextView) itemView.findViewById(R.id.custom_label);
-    this.orderMode = (ImageView) itemView.findViewById(R.id.order_mode);
-    this.orderLocked = (ImageView) itemView.findViewById(R.id.locked);
-    this.orderScheduled = (ImageView) itemView.findViewById(R.id.scheduled);
-    this.orderTrunk = (ImageView) itemView.findViewById(R.id.trunk);
-    this.orderSynced = (ImageView) itemView.findViewById(R.id.synced);
-    this.context = itemView.getContext();
+    mOrderId = (TextView) itemView.findViewById(R.id.order_id);
+    mContactName = (TextView) itemView.findViewById(R.id.contact_name);
+    mContactAddress = (TextView) itemView.findViewById(R.id.contact_address);
+    mCustomLabel = (TextView) itemView.findViewById(R.id.custom_label);
+    mOrderMode = (ImageView) itemView.findViewById(R.id.order_mode);
+    mOrderLocked = (ImageView) itemView.findViewById(R.id.locked);
+    mOrderScheduled = (ImageView) itemView.findViewById(R.id.scheduled);
+    mOrderTrunk = (ImageView) itemView.findViewById(R.id.trunk);
+    mOrderSynced = (ImageView) itemView.findViewById(R.id.synced);
+    mContext = itemView.getContext();
+    mCardView = (CardView) itemView.findViewById(R.id.card_item);
+    mReorder = (ImageView) itemView.findViewById(R.id.reorder_icon);
 
   }
 
@@ -54,84 +63,103 @@ public class OrderHolder extends RecyclerView.ViewHolder {
     String name = orderData.getContactName();
     String address = orderData.getContactAddress();
     String label = orderData.getTagLabel();
-    String tagcolor = orderData.getTagColor();
+    String tagColor = orderData.getTagColor();
     OrderData.OrderMode mode = orderData.getMode();
     boolean locked = orderData.isSynced();
     boolean scheduled = orderData.isScheduled();
     boolean trunk = orderData.isTrunk();
     boolean synced = orderData.isSynced();
 
-    Drawable defaultIcon = ContextCompat.getDrawable(context, R.drawable.ic_default);
-    Drawable pickupIcon = ContextCompat.getDrawable(context, R.drawable.ic_pickup);
-    Drawable pickupanddeliveryIcon = ContextCompat.getDrawable(context, R.drawable.ic_pickupanddelivery);
+    Drawable defaultIcon = ContextCompat.getDrawable(mContext, R.drawable.ic_default);
+    Drawable pickupIcon = ContextCompat.getDrawable(mContext, R.drawable.ic_pickup);
+    Drawable pickupanddeliveryIcon = ContextCompat.getDrawable(mContext, R.drawable.ic_pickupanddelivery);
 
-    Drawable lockedIcon = ContextCompat.getDrawable(context, R.drawable.ic_locked);
-    Drawable scheduledIcon = ContextCompat.getDrawable(context, R.drawable.ic_scheduled);
-    Drawable trunkIcon = ContextCompat.getDrawable(context, R.drawable.ic_trunk);
-    Drawable syncedIcon = ContextCompat.getDrawable(context, R.drawable.ic_synced);
+    Drawable lockedIcon = ContextCompat.getDrawable(mContext, R.drawable.ic_locked);
+    Drawable scheduledIcon = ContextCompat.getDrawable(mContext, R.drawable.ic_scheduled);
+    Drawable trunkIcon = ContextCompat.getDrawable(mContext, R.drawable.ic_trunk);
+    Drawable syncedIcon = ContextCompat.getDrawable(mContext, R.drawable.ic_synced);
 
+    int delivered = getColor(mContext, R.color.delivered);
+    int notDelivered = getColor(mContext, R.color.not_delivered);
+    int partiallyDelivered = getColor(mContext, R.color.partially_delivered);
+    int pending = getColor(mContext, R.color.pending);
 
-    int delivered = getColor(context, R.color.delivered);
-    int notDelivered = getColor(context, R.color.not_delivered);
-    int partiallyDelivered = getColor(context, R.color.partially_delivered);
-    int pending = getColor(context, R.color.pending);
-
-    orderId.setText(id);
+    mOrderId.setText(id);
 
     switch (status) {
       case DELIVERED:
-        orderId.setTextColor(delivered);
+        mOrderId.setTextColor(delivered);
         break;
       case NOT_DELIVERED:
-        orderId.setTextColor(notDelivered);
+        mOrderId.setTextColor(notDelivered);
         break;
       case PARTIALLY_DELIVERED:
-        orderId.setTextColor(partiallyDelivered);
+        mOrderId.setTextColor(partiallyDelivered);
         break;
       case PENDING:
-        orderId.setTextColor(pending);
+        mOrderId.setTextColor(pending);
     }
 
-    contactName.setText(name);
-    contactAddress.setText(address);
+    mContactName.setText(name);
+    mContactAddress.setText(address);
+
     if (label == null) {
-      customLabel.setVisibility(View.GONE);
+      mCustomLabel.setVisibility(View.GONE);
+    } else if (tagColor == null) {
+      mCustomLabel.setText(label);
+      mCustomLabel.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorDisabled));
+      mCustomLabel.setTextColor(ContextCompat.getColor(mContext, R.color.black));
     } else {
-      customLabel.setText(label);
-      customLabel.setBackgroundColor(Color.parseColor(tagcolor));
+      mCustomLabel.setText(label);
+      mCustomLabel.setBackgroundColor(Color.parseColor(tagColor));
     }
 
     switch (mode) {
       case DEFAULT:
-        orderMode.setImageDrawable(defaultIcon);
+        mOrderMode.setImageDrawable(defaultIcon);
         break;
       case PICKUP:
-        orderMode.setImageDrawable(pickupIcon);
+        mOrderMode.setImageDrawable(pickupIcon);
         break;
       case PICKUP_AND_DELIVERY:
-        orderMode.setImageDrawable(pickupanddeliveryIcon);
+        mOrderMode.setImageDrawable(pickupanddeliveryIcon);
         break;
     }
 
-    orderLocked.setImageDrawable(lockedIcon);
-    orderScheduled.setImageDrawable(scheduledIcon);
-    orderTrunk.setImageDrawable(trunkIcon);
-    orderSynced.setImageDrawable(syncedIcon);
+    mOrderLocked.setImageDrawable(lockedIcon);
+    mOrderScheduled.setImageDrawable(scheduledIcon);
+    mOrderTrunk.setImageDrawable(trunkIcon);
+    mOrderSynced.setImageDrawable(syncedIcon);
 
-    setColorIcon(orderLocked, locked);
-    setColorIcon(orderTrunk, trunk);
-    setColorIcon(orderScheduled, scheduled);
-    setColorIcon(orderSynced, synced);
+    setColorIcon(mOrderLocked, locked);
+    setColorIcon(mOrderTrunk, trunk);
+    setColorIcon(mOrderScheduled, scheduled);
+    setColorIcon(mOrderSynced, synced);
+
+    mReorder.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_reorder));
+
 
 
   }
 
   private void setColorIcon(ImageView v, boolean b) {
     if (b) {
-      v.setColorFilter(getColor(context, R.color.colorEnabled));
+      v.setColorFilter(getColor(mContext, R.color.colorEnabled));
     } else {
-      v.setColorFilter(getColor(context, R.color.colorDisabled));
+      v.setColorFilter(getColor(mContext, R.color.colorDisabled));
     }
   }
+
+  @Override
+  public void onItemSelected() {
+    mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorEnabled));
+
+  }
+
+  @Override
+  public void onItemClear() {
+    mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+  }
+
 
 }

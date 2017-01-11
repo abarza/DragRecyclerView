@@ -38,7 +38,7 @@ public class OrderService {
 
 
     list.add(new OrderData(OrderData.status.PENDING, "13123123", "Francisco Abarza", "La " +
-        "Concepción 80 Depto 310", "Importante", "#5c14e2", OrderData.OrderMode
+        "Concepción 80 Depto 310", "Alta", "#fc0000", OrderData.OrderMode
         .DEFAULT, false, false, false, true));
     list.add(new OrderData(OrderData.status.NOT_DELIVERED, "4324324324", "Jorge Codina", "Presidente " +
         "Errázuriz 4125, Las Condes",
@@ -52,7 +52,7 @@ public class OrderService {
     list.add(new OrderData(OrderData.status.PARTIALLY_DELIVERED, "245363223", "Andres Colonia", "Alonso de " +
         "Córdova 5670, OF 1504, " +
         "Las Condes",
-        null, "#342342", OrderData.OrderMode
+        "Pudahuel", null, OrderData.OrderMode
         .PICKUP_AND_DELIVERY, false, false, false, false));
     list.add(new OrderData(OrderData.status.PENDING, "45362311", "Andres Colonia", "Alonso de " +
         "Córdova 5670, OF 1504, " +
