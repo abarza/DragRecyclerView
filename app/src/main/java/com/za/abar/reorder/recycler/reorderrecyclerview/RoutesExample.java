@@ -3,6 +3,7 @@ package com.za.abar.reorder.recycler.reorderrecyclerview;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -124,9 +125,9 @@ public class RoutesExample extends AppCompatActivity {
     public CharSequence getPageTitle(int position) {
       switch (position) {
         case 0:
-          return "En Ruta";
+          return getString(R.string.onroute);
         case 1:
-          return "Completo";
+          return getString(R.string.completed);
       }
       return null;
     }

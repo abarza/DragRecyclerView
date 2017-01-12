@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="title_activity_route_example">RouteExample</string>
+  <string name="title_activity_routes_example">RoutesExample</string>
+  <string name="onroute" translatable="false">Pendiente</string>
+  <string name="completed">Completado</string>
+  <string name="action_settings">Ajustes</string>
+</resources>

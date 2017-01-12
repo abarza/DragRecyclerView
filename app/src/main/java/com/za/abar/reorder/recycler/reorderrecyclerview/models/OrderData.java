@@ -12,7 +12,8 @@ public class OrderData {
   /**
    * Order Fields:
    *
-   * @param status status of the order (pending, delivered, not delivered, partially delivered)
+   * @param orderStatus status of the order (pending, delivered, not delivered, partially
+   * delivered)
    * @param orderID identifies the shipment order.
    * @param contactName name of the contact associated to the order
    * @param contactAddress address of the contact associated to the order
