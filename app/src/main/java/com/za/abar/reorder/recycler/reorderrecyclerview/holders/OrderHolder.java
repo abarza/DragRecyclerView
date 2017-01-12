@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.za.abar.reorder.recycler.reorderrecyclerview.MainActivity;
 import com.za.abar.reorder.recycler.reorderrecyclerview.R;
 import com.za.abar.reorder.recycler.reorderrecyclerview.models.OrderData;
 import com.za.abar.reorder.recycler.reorderrecyclerview.utilities.ItemTouchHelperViewHolder;
@@ -22,9 +21,7 @@ import static android.support.v4.content.ContextCompat.getColor;
  * Created by abarza on 27-12-16.
  */
 
-public class OrderHolder
-    extends RecyclerView.ViewHolder
-    implements ItemTouchHelperViewHolder{
+public class OrderHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
 
   private TextView mOrderId;
   private TextView mContactName;
@@ -36,7 +33,7 @@ public class OrderHolder
   private ImageView mOrderTrunk;
   private ImageView mOrderSynced;
   private Context mContext;
-  private final CardView mCardView;
+  private CardView mCardView;
   public final ImageView mReorder;
 
   public OrderHolder(View itemView) {
@@ -139,7 +136,6 @@ public class OrderHolder
     mReorder.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_reorder));
 
 
-
   }
 
   private void setColorIcon(ImageView v, boolean b) {
@@ -152,7 +148,7 @@ public class OrderHolder
 
   @Override
   public void onItemSelected() {
-    mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.colorEnabled));
+    mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.light_gray));
 
   }
 

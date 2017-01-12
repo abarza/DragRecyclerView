@@ -14,4 +14,7 @@
   <color name="not_delivered">#E52C38</color>
   <color name="partially_delivered">#FFC107</color>
   <color name="pending">#4F9DC3</color>
+
+  <!-- CardView focus -->
+  <color name="light_gray">#e9e9e9</color>
 </resources>

@@ -2,7 +2,7 @@ package com.za.abar.reorder.recycler.reorderrecyclerview.models;
 
 /**
  * Created by abarza on 27-12-16.
- * <p>
+ *
  * Dummy model class with shipment order data
  */
 
@@ -37,11 +37,11 @@ public class OrderData {
   private boolean isSynced;
 
   public enum status {
-    PENDING, DELIVERED, NOT_DELIVERED, PARTIALLY_DELIVERED;
+    PENDING, DELIVERED, NOT_DELIVERED, PARTIALLY_DELIVERED
   }
 
   public enum OrderMode {
-    DEFAULT, PICKUP, PICKUP_AND_DELIVERY;
+    DEFAULT, PICKUP, PICKUP_AND_DELIVERY
   }
 
 

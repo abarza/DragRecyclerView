@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -28,13 +29,12 @@ public class OrdersFragment extends Fragment implements
     OnStartDragListener {
   public static final String TAG = OrdersFragment.class.getSimpleName();
   private ItemTouchHelper mItemTouchHelper;
-  private LinearLayoutManager mLayoutManager;
 
   public OrdersFragment() {
     // Required empty public constructor
   }
 
-  public static OrdersFragment newInstanceFragment() {
+  public static OrdersFragment newInstance() {
     Log.d(TAG, "newInstance: ");
     OrdersFragment fragment = new OrdersFragment();
     Bundle args = new Bundle();
@@ -53,30 +53,34 @@ public class OrdersFragment extends Fragment implements
                            Bundle savedInstanceState) {
 
     // Inflate the layout for this fragment
-    View v = inflater.inflate(R.layout.fragment_orders, container, false);
+    return inflater.inflate(R.layout.fragment_orders, container, false);
 
-    OrderAdapter orderAdapter = new OrderAdapter(OrderService.getInstance().getOrders(), getActivity(), this);
+  }
 
-    RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recycler_orders);
+  @Override
+  public void onViewCreated(View view, Bundle icicle) {
+    super.onViewCreated(view, icicle);
+
+    OrderAdapter orderAdapter = new OrderAdapter(OrderService.getInstance().getOrders(),
+        this);
+
+    RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_orders);
     recyclerView.setHasFixedSize(true);
+    recyclerView.setAdapter(orderAdapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
 
     ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(orderAdapter);
     mItemTouchHelper = new ItemTouchHelper(callback);
-
-    mLayoutManager = new LinearLayoutManager(getContext());
-    mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-    recyclerView.setLayoutManager(mLayoutManager);
-
-    recyclerView.setAdapter(orderAdapter);
+    mItemTouchHelper.attachToRecyclerView(recyclerView);
 
 
-    return v;
   }
 
   @Override
   public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
     mItemTouchHelper.startDrag(viewHolder);
   }
+
 
 }
