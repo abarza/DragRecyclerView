@@ -6,7 +6,7 @@
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent"
                                                  android:fitsSystemWindows="true"
-                                                 tools:context="com.za.abar.reorder.recycler.reorderrecyclerview.RoutesExample">
+                                                 tools:context="com.za.abar.reorder.recycler.reorderrecyclerview.RouteActivity">
 
   <android.support.design.widget.AppBarLayout
       android:id="@+id/appbar"

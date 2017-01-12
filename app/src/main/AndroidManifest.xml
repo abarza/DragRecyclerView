@@ -9,7 +9,7 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
     <activity
-        android:name=".RoutesExample"
+        android:name=".RouteActivity"
         android:label="@string/title_activity_routes_example"
         android:theme="@style/AppTheme.NoActionBar">
       <intent-filter>
