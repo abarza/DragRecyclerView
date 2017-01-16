@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,7 +34,7 @@ public class OrderHolder extends RecyclerView.ViewHolder implements ItemTouchHel
   private ImageView mOrderTrunk;
   private ImageView mOrderSynced;
   private Context mContext;
-  private CardView mCardView;
+  private final CardView mCardView;
   public final ImageView mReorder;
 
   public OrderHolder(View itemView) {

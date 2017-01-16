@@ -28,7 +28,6 @@ public class RouteActivity extends AppCompatActivity {
 
   private SectionsPagerAdapter mSectionsPagerAdapter;
   private ViewPager mViewPager;
-  private boolean isDragAndDropEnabled = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
