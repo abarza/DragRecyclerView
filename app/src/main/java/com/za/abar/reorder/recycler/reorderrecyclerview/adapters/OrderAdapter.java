@@ -1,14 +1,17 @@
 package com.za.abar.reorder.recycler.reorderrecyclerview.adapters;
 
+import android.app.Activity;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 
 import com.za.abar.reorder.recycler.reorderrecyclerview.R;
+import com.za.abar.reorder.recycler.reorderrecyclerview.RouteActivity;
 import com.za.abar.reorder.recycler.reorderrecyclerview.holders.OrderHolder;
 import com.za.abar.reorder.recycler.reorderrecyclerview.listener.OnStartDragListener;
 import com.za.abar.reorder.recycler.reorderrecyclerview.models.OrderData;
@@ -16,6 +19,8 @@ import com.za.abar.reorder.recycler.reorderrecyclerview.utilities.ItemTouchHelpe
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by abarza on 27-12-16.
@@ -26,13 +31,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
 
   private ArrayList<OrderData> mOrderdata;
   private final OnStartDragListener mDragStartListener;
-  private OrderHolder mHolder;
+  private Activity mActivity;
+  FrameLayout.LayoutParams mLayoutParams;
+
 
   public OrderAdapter(ArrayList<OrderData> orderdata,
-                      OnStartDragListener dragListener) {
+                      OnStartDragListener dragListener, Activity activity) {
 
     mOrderdata = orderdata;
     mDragStartListener = dragListener;
+    mActivity = activity;
+
   }
 
   @Override
@@ -41,6 +50,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
     View orderCard = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_cardview,
         parent, false);
     return new OrderHolder(orderCard);
+
+
   }
 
   @Override
@@ -64,20 +75,45 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
 
   @Override
   public void onBindViewHolder(final OrderHolder holder, final int position) {
+
     final OrderData routeData = mOrderdata.get(position);
     holder.updateUI(routeData);
+    mLayoutParams = new FrameLayout.LayoutParams(FrameLayout
+        .LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 
-    // Start a drag whenever the handle view it touched<
-    holder.mReorder.setOnTouchListener(new View.OnTouchListener() {
-      @Override
-      public boolean onTouch(View v, MotionEvent event) {
-        if (MotionEventCompat.getActionMasked(event) ==
-            MotionEvent.ACTION_DOWN) {
-          mDragStartListener.onStartDrag(holder);
-        }
-        return false;
+    if (mActivity instanceof RouteActivity) {
+      if (((RouteActivity) mActivity).isSortEnabled) {
+        holder.mReorder.setVisibility(View.VISIBLE);
+        mLayoutParams.setMargins(15,0,60,0);
+        holder.mCardView.setLayoutParams(mLayoutParams);
+
+        String bool = Boolean.toString(((RouteActivity) mActivity).isSortEnabled);
+        Log.d(TAG, "onBindViewHolder: " + bool);
+        // Start a drag whenever the handle view it touched
+        holder.itemView.setOnTouchListener(new View.OnTouchListener() {
+          @Override
+          public boolean onTouch(View v, MotionEvent event) {
+            if (MotionEventCompat.getActionMasked(event) ==
+                MotionEvent.ACTION_DOWN) {
+              mDragStartListener.onStartDrag(holder);
+            }
+            return false;
+          }
+        });
+      } else {
+        holder.mReorder.setVisibility(View.GONE);
+        holder.itemView.setOnTouchListener(new View.OnTouchListener() {
+          @Override
+          public boolean onTouch(View view, MotionEvent motionEvent) {
+            return false;
+          }
+        });
+        mLayoutParams.setMargins(15,0,15,0);
+        holder.mCardView.setLayoutParams(mLayoutParams);
       }
-    });
+
+    }
+
 
   }
 

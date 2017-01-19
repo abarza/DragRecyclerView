@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import com.za.abar.reorder.recycler.reorderrecyclerview.R;
 import com.za.abar.reorder.recycler.reorderrecyclerview.models.OrderData;
 import com.za.abar.reorder.recycler.reorderrecyclerview.utilities.ItemTouchHelperViewHolder;
-
 
 import static android.support.v4.content.ContextCompat.getColor;
 
@@ -34,8 +32,8 @@ public class OrderHolder extends RecyclerView.ViewHolder implements ItemTouchHel
   private ImageView mOrderTrunk;
   private ImageView mOrderSynced;
   private Context mContext;
-  private final CardView mCardView;
-  public final ImageView mReorder;
+  public CardView mCardView;
+  public ImageView mReorder;
 
   public OrderHolder(View itemView) {
     super(itemView);
@@ -52,6 +50,7 @@ public class OrderHolder extends RecyclerView.ViewHolder implements ItemTouchHel
     mContext = itemView.getContext();
     mCardView = (CardView) itemView.findViewById(R.id.card_item);
     mReorder = (ImageView) itemView.findViewById(R.id.reorder_icon);
+
 
   }
 
@@ -134,7 +133,8 @@ public class OrderHolder extends RecyclerView.ViewHolder implements ItemTouchHel
     setColorIcon(mOrderScheduled, scheduled);
     setColorIcon(mOrderSynced, synced);
 
-    mReorder.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_reorder));
+    mReorder.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable
+        .ic_reorder));
 
 
   }

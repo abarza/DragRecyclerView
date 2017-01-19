@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.za.abar.reorder.recycler.reorderrecyclerview.R;
+import com.za.abar.reorder.recycler.reorderrecyclerview.fragments.DummyFragment;
 import com.za.abar.reorder.recycler.reorderrecyclerview.fragments.OrdersFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -29,7 +30,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
       case 0:
         return OrdersFragment.newInstance();
       case 1:
-        return OrdersFragment.newInstance();
+        return DummyFragment.newInstance();
       default:
         return new Fragment();
     }

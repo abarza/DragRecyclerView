@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:fitsSystemWindows="true"
     tools:context="com.za.abar.reorder.recycler.reorderrecyclerview.RouteActivity">
 
@@ -44,8 +45,8 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="end|bottom"
-      android:visibility="gone"
       android:layout_margin="@dimen/fab_margin"
+      android:visibility="gone"
       app:srcCompat="@android:drawable/ic_dialog_email"/>
 
 </android.support.design.widget.CoordinatorLayout>

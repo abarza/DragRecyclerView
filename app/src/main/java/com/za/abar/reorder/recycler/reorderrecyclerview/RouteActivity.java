@@ -1,33 +1,27 @@
 package com.za.abar.reorder.recycler.reorderrecyclerview;
 
-import android.support.design.widget.TabLayout;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Toast;
 
-import android.widget.TextView;
-
+import com.za.abar.reorder.recycler.reorderrecyclerview.adapters.OrderAdapter;
 import com.za.abar.reorder.recycler.reorderrecyclerview.adapters.SectionsPagerAdapter;
-import com.za.abar.reorder.recycler.reorderrecyclerview.fragments.OrdersFragment;
 
 public class RouteActivity extends AppCompatActivity {
 
-
+  private static final String TAG = RouteActivity.class.getSimpleName();
   private SectionsPagerAdapter mSectionsPagerAdapter;
-  private ViewPager mViewPager;
+  public boolean isSortEnabled = false;
+  private OrderAdapter mOrderAdapter;
+  private FloatingActionButton mFab;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -41,20 +35,26 @@ public class RouteActivity extends AppCompatActivity {
     mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
 
     // Set up the ViewPager with the sections adapter.
-    mViewPager = (ViewPager) findViewById(R.id.container);
-    mViewPager.setAdapter(mSectionsPagerAdapter);
+    ViewPager viewPager = (ViewPager) findViewById(R.id.container);
+    viewPager.setAdapter(mSectionsPagerAdapter);
 
     TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-    tabLayout.setupWithViewPager(mViewPager);
+    tabLayout.setupWithViewPager(viewPager);
 
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
+    mFab = (FloatingActionButton) findViewById(R.id.fab);
+    mFab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show();
+        isSortEnabled = false;
+        if (mOrderAdapter != null) {
+          mOrderAdapter.notifyDataSetChanged();
+        }
+        Log.d(TAG, "onClick: " + isSortEnabled);
+        view.setVisibility(View.GONE);
       }
     });
+
+    Log.d(TAG, "onCreate: " + isSortEnabled);
 
   }
 
@@ -72,12 +72,26 @@ public class RouteActivity extends AppCompatActivity {
     // as you specify a parent activity in AndroidManifest.xml.
     int id = item.getItemId();
 
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
-      return true;
+    switch (id) {
+      case R.id.action_settings:
+        break;
+      case R.id.action_reorder:
+        isSortEnabled = true;
+        if (mOrderAdapter != null) {
+          mOrderAdapter.notifyDataSetChanged();
+        }
+        mFab.setVisibility(View.VISIBLE);
+        mFab.setImageResource(R.drawable.ic_reorder);
+
+        break;
     }
 
+
     return super.onOptionsItemSelected(item);
+  }
+
+  public void setAdapter(OrderAdapter orderAdapter) {
+    mOrderAdapter = orderAdapter;
   }
 
 

@@ -4,6 +4,7 @@ import com.za.abar.reorder.recycler.reorderrecyclerview.R;
 import com.za.abar.reorder.recycler.reorderrecyclerview.models.OrderData;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Created by abarza on 27-12-16.
@@ -61,13 +62,15 @@ public class OrderService {
         .DEFAULT, false, false, false, false));
     list.add(new OrderData(OrderData.status.PENDING, "2323423423", "Juan Pablo Lazcano",
         "Alonso de " +
-        "Córdova 5670, OF 1504, " +
-        "Las Condes",
+            "Córdova 5670, OF 1504, " +
+            "Las Condes",
         null, "#342342", OrderData.OrderMode
         .DEFAULT, false, false, true, false));
 
 
     return list;
   }
+
+
 
 }
