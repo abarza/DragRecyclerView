@@ -23,10 +23,8 @@ import static android.support.v4.content.ContextCompat.getColor;
  */
 
 
-public class OrderHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder, View
-    .OnLongClickListener {
+public class OrderHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
 
-  private MultiSelector mMultiSelector = new MultiSelector();
   private TextView mOrderId;
   private TextView mContactName;
   private TextView mContactAddress;
@@ -166,9 +164,4 @@ public class OrderHolder extends RecyclerView.ViewHolder implements ItemTouchHel
     mCardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
   }
 
-
-  @Override
-  public boolean onLongClick(View v) {
-    return false;
-  }
 }
