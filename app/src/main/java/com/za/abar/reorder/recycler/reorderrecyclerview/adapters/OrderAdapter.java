@@ -3,7 +3,6 @@ package com.za.abar.reorder.recycler.reorderrecyclerview.adapters;
 import android.app.Activity;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,12 +14,11 @@ import com.za.abar.reorder.recycler.reorderrecyclerview.RouteActivity;
 import com.za.abar.reorder.recycler.reorderrecyclerview.holders.OrderHolder;
 import com.za.abar.reorder.recycler.reorderrecyclerview.listener.OnStartDragListener;
 import com.za.abar.reorder.recycler.reorderrecyclerview.models.OrderData;
-import com.za.abar.reorder.recycler.reorderrecyclerview.utilities.ItemTouchHelperAdapter;
+import com.za.abar.reorder.recycler.reorderrecyclerview.reorder_utilities.ItemTouchHelperAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by abarza on 27-12-16.
@@ -32,7 +30,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
   private ArrayList<OrderData> mOrderdata;
   private final OnStartDragListener mDragStartListener;
   private Activity mActivity;
-  FrameLayout.LayoutParams mLayoutParams;
+  private FrameLayout.LayoutParams mLayoutParams;
+
 
 
   public OrderAdapter(ArrayList<OrderData> orderdata,
@@ -81,14 +80,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
     mLayoutParams = new FrameLayout.LayoutParams(FrameLayout
         .LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 
+
     if (mActivity instanceof RouteActivity) {
       if (((RouteActivity) mActivity).isSortEnabled) {
         holder.mReorder.setVisibility(View.VISIBLE);
-        mLayoutParams.setMargins(15,0,60,0);
+        mLayoutParams.setMargins(15, 0, 60, 0);
         holder.mCardView.setLayoutParams(mLayoutParams);
-
-        String bool = Boolean.toString(((RouteActivity) mActivity).isSortEnabled);
-        Log.d(TAG, "onBindViewHolder: " + bool);
         // Start a drag whenever the handle view it touched
         holder.itemView.setOnTouchListener(new View.OnTouchListener() {
           @Override
@@ -108,13 +105,25 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
             return false;
           }
         });
-        mLayoutParams.setMargins(15,0,15,0);
+        mLayoutParams.setMargins(15, 0, 15, 0);
         holder.mCardView.setLayoutParams(mLayoutParams);
+
       }
 
     }
 
+    holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+      @Override
+      public boolean onLongClick(View v) {
+        //select item on long click
 
-  }
+        return false;
+      }
+    });
+
+
+
+}
+
 
 }

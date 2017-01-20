@@ -1,4 +1,4 @@
-package com.za.abar.reorder.recycler.reorderrecyclerview.utilities;
+package com.za.abar.reorder.recycler.reorderrecyclerview.reorder_utilities;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;

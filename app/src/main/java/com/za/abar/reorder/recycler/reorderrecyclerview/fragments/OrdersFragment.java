@@ -16,7 +16,7 @@ import com.za.abar.reorder.recycler.reorderrecyclerview.RouteActivity;
 import com.za.abar.reorder.recycler.reorderrecyclerview.adapters.OrderAdapter;
 import com.za.abar.reorder.recycler.reorderrecyclerview.listener.OnStartDragListener;
 import com.za.abar.reorder.recycler.reorderrecyclerview.services.OrderService;
-import com.za.abar.reorder.recycler.reorderrecyclerview.utilities.SimpleItemTouchHelperCallback;
+import com.za.abar.reorder.recycler.reorderrecyclerview.reorder_utilities.SimpleItemTouchHelperCallback;
 
 /**
  * Created by abarza on 28-12-16.

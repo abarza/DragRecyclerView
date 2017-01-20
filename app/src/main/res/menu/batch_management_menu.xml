@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".RouteActivity">
+
+  <item
+      android:id="@+id/action_select_all"
+      android:icon="@drawable/ic_select_all"
+      android:orderInCategory="100"
+      android:title="Select all"
+      app:showAsAction="always"
+      />
+
+
+  <item
+      android:id="@+id/select_last_mile"
+      android:icon="@drawable/ic_clear"
+      android:orderInCategory="100"
+      android:checkable="true"
+      android:title="Última milla"
+      android:actionViewClass="android.widget.CheckBox"
+      app:showAsAction="ifRoom|withText"
+      />
+
+
+  <item
+      android:id="@+id/select_trunk"
+      android:icon="@drawable/ic_clear"
+      android:orderInCategory="100"
+      android:title="Troncales"
+      android:checkable="true"
+      android:actionViewClass="android.widget.CheckBox"
+      app:showAsAction="ifRoom|withText"
+      />
+
+
+
+</menu>

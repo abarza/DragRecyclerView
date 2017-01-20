@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.za.abar.reorder.recycler.reorderrecyclerview.R;
 import com.za.abar.reorder.recycler.reorderrecyclerview.models.OrderData;
-import com.za.abar.reorder.recycler.reorderrecyclerview.utilities.ItemTouchHelperViewHolder;
+import com.za.abar.reorder.recycler.reorderrecyclerview.multiselect_utilities.MultiSelector;
+import com.za.abar.reorder.recycler.reorderrecyclerview.multiselect_utilities.SwappingHolder;
+import com.za.abar.reorder.recycler.reorderrecyclerview.reorder_utilities.ItemTouchHelperViewHolder;
 
 import static android.support.v4.content.ContextCompat.getColor;
 
@@ -20,8 +22,11 @@ import static android.support.v4.content.ContextCompat.getColor;
  * Created by abarza on 27-12-16.
  */
 
-public class OrderHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
 
+public class OrderHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder, View
+    .OnLongClickListener {
+
+  private MultiSelector mMultiSelector = new MultiSelector();
   private TextView mOrderId;
   private TextView mContactName;
   private TextView mContactAddress;
@@ -34,6 +39,9 @@ public class OrderHolder extends RecyclerView.ViewHolder implements ItemTouchHel
   private Context mContext;
   public CardView mCardView;
   public ImageView mReorder;
+
+
+
 
   public OrderHolder(View itemView) {
     super(itemView);
@@ -159,4 +167,8 @@ public class OrderHolder extends RecyclerView.ViewHolder implements ItemTouchHel
   }
 
 
+  @Override
+  public boolean onLongClick(View v) {
+    return false;
+  }
 }
