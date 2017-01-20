@@ -42,7 +42,7 @@ captures/
 /.idea/libraries
 .externalNativeBuild
 /local.properties
-
+.idea
 
 # Keystore files
 *.jks
