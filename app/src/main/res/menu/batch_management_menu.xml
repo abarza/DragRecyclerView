@@ -5,6 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".RouteActivity">
 
+
+  <item
+      android:id="@+id/action_clear_all"
+      android:icon="@drawable/ic_clear"
+      android:orderInCategory="100"
+      android:title="Clear all"
+      app:showAsAction="always"
+      />
+
   <item
       android:id="@+id/action_select_all"
       android:icon="@drawable/ic_select_all"
@@ -16,7 +25,6 @@
 
   <item
       android:id="@+id/select_last_mile"
-      android:icon="@drawable/ic_clear"
       android:orderInCategory="100"
       android:checkable="true"
       android:title="Última milla"
@@ -27,7 +35,6 @@
 
   <item
       android:id="@+id/select_trunk"
-      android:icon="@drawable/ic_clear"
       android:orderInCategory="100"
       android:title="Troncales"
       android:checkable="true"

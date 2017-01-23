@@ -7,4 +7,7 @@
   <string name="onroute" translatable="false">Pendiente</string>
   <string name="completed">Completado</string>
   <string name="action_settings">Ajustes</string>
+  <string name="action_select_all">Seleccionar todo</string>
+  <string name="action_clear_selection">Limpiar selección</string>
+  <string name="selection_text">%1$d seleccionados</string>
 </resources>

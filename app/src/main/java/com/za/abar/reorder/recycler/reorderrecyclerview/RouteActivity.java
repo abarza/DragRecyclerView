@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-
 import com.za.abar.reorder.recycler.reorderrecyclerview.adapters.OrderAdapter;
 import com.za.abar.reorder.recycler.reorderrecyclerview.adapters.SectionsPagerAdapter;
 
@@ -23,9 +22,11 @@ public class RouteActivity extends AppCompatActivity {
   private OrderAdapter mOrderAdapter;
   private FloatingActionButton mFab;
 
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     setContentView(R.layout.activity_routes_example);
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -1,8 +1,12 @@
 package com.za.abar.reorder.recycler.reorderrecyclerview.adapters;
 
 import android.app.Activity;
+import android.content.Context;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +22,7 @@ import com.za.abar.reorder.recycler.reorderrecyclerview.reorder_utilities.ItemTo
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -31,15 +36,26 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
   private final OnStartDragListener mDragStartListener;
   private Activity mActivity;
   private FrameLayout.LayoutParams mLayoutParams;
-
+  private SparseBooleanArray selectedItems;
+  private RecyclerView mRecyclerView;
+  private int mItemCount;
+  private GestureDetectorCompat mGestureDetectorCompat;
+  private ActionMode mActionMode;
+  private Context mContext;
 
 
   public OrderAdapter(ArrayList<OrderData> orderdata,
                       OnStartDragListener dragListener, Activity activity) {
 
-    mOrderdata = orderdata;
     mDragStartListener = dragListener;
     mActivity = activity;
+
+    if (orderdata == null) {
+      throw new IllegalArgumentException("Modeldata must no be null");
+    } else {
+      mOrderdata = orderdata;
+      selectedItems = new SparseBooleanArray();
+    }
 
   }
 
@@ -53,9 +69,63 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
 
   }
 
+  /**
+   * Adds and item into the underlying data set
+   * at the position passed into the method.
+   *
+   * @param orderData The item to add to the data set.
+   * @param position  The index of the item to remove.
+   */
+  public void addData(OrderData orderData, int position) {
+    mOrderdata.add(position, orderData);
+    notifyItemInserted(position);
+  }
+
+  /**
+   * Removes the item that currently is at the passed in position from the
+   * underlying data set.
+   *
+   * @param position The index of the item to remove.
+   */
+  public void removeData(int position) {
+    mOrderdata.remove(position);
+    notifyItemRemoved(position);
+  }
+
+  public OrderData getItem(int position) {
+    return mOrderdata.get(position);
+  }
+
   @Override
   public int getItemCount() {
     return mOrderdata.size();
+  }
+
+  public void toggleSelection(int pos) {
+    if (selectedItems.get(pos, false)) {
+      selectedItems.delete(pos);
+    }
+    else {
+      selectedItems.put(pos, true);
+    }
+    notifyItemChanged(pos);
+  }
+
+  public void clearSelections() {
+    selectedItems.clear();
+    notifyDataSetChanged();
+  }
+
+  public int getSelectedItemCount() {
+    return selectedItems.size();
+  }
+
+  public List<Integer> getSelectedItems() {
+    List<Integer> items = new ArrayList<>(selectedItems.size());
+    for (int i = 0; i < selectedItems.size(); i++) {
+      items.add(selectedItems.keyAt(i));
+    }
+    return items;
   }
 
 
@@ -76,6 +146,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
   public void onBindViewHolder(final OrderHolder holder, final int position) {
 
     final OrderData routeData = mOrderdata.get(position);
+
     holder.updateUI(routeData);
     mLayoutParams = new FrameLayout.LayoutParams(FrameLayout
         .LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -110,6 +181,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
 
       }
 
+      holder.itemView.setActivated(selectedItems.get(position, false));
+
     }
 
     holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -122,8 +195,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
     });
 
 
-
-}
+  }
 
 
 }
