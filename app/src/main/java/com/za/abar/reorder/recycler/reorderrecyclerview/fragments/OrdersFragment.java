@@ -60,7 +60,7 @@ public class OrdersFragment extends Fragment implements
       switch (item.getItemId()) {
         case R.id.action_select_all:
           Toast.makeText(getActivity(), "Select All", Toast.LENGTH_SHORT).show();
-          break;
+          return true;
         case R.id.action_clear_all:
           Toast.makeText(getActivity(), "Clear All", Toast.LENGTH_SHORT).show();
           mOrderAdapter.clearSelections();
@@ -202,6 +202,10 @@ public class OrdersFragment extends Fragment implements
 
   @Override
   public void onClick(View v) {
+    if (mActionMode != null) {
+      int idx = mRecyclerView.indexOfChild(v);
+      myToggleSelection(idx);
+    }
 
   }
 

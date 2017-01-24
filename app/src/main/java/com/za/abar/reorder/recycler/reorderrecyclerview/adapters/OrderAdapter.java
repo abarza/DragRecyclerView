@@ -185,15 +185,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
 
     }
 
-    holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-      @Override
-      public boolean onLongClick(View v) {
-        //select item on long click
-
-        return false;
-      }
-    });
-
 
   }
 
