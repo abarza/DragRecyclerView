@@ -37,11 +37,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
   private Activity mActivity;
   private FrameLayout.LayoutParams mLayoutParams;
   private SparseBooleanArray selectedItems;
-  private RecyclerView mRecyclerView;
-  private int mItemCount;
-  private GestureDetectorCompat mGestureDetectorCompat;
-  private ActionMode mActionMode;
-  private Context mContext;
 
 
   public OrderAdapter(ArrayList<OrderData> orderdata,

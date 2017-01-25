@@ -1,6 +1,7 @@
 package com.za.abar.reorder.recycler.reorderrecyclerview.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GestureDetectorCompat;
@@ -61,19 +62,22 @@ public class OrdersFragment extends Fragment implements
         case R.id.action_clear_all:
           Toast.makeText(getActivity(), "Clear All", Toast.LENGTH_SHORT).show();
           mOrderAdapter.clearSelections();
-          break;
+          mActionMode.finish();
+          return true;
         case R.id.select_last_mile:
           Toast.makeText(getActivity(), "Just last mile shipments", Toast.LENGTH_SHORT).show();
-          break;
+          return true;
         case R.id.select_trunk:
           Toast.makeText(getActivity(), "Just trunk shipments", Toast.LENGTH_SHORT).show();
-          break;
+          return true;
+        default:
+          return false;
       }
-      return false;
     }
 
     @Override
     public void onDestroyActionMode(ActionMode mode) {
+      mActionMode = null;
       mOrderAdapter.clearSelections();
     }
   };
@@ -95,6 +99,11 @@ public class OrdersFragment extends Fragment implements
     super.onCreate(savedInstanceState);
     setHasOptionsMenu(true);
 
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    mRecyclerView.getAdapter().notifyDataSetChanged();
   }
 
 

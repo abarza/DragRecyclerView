@@ -14,12 +14,12 @@ import com.za.abar.reorder.recycler.reorderrecyclerview.fragments.OrdersFragment
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-  Context context;
+  private Context mContext;
 
-  public SectionsPagerAdapter(FragmentManager fm, Context mContext) {
+  public SectionsPagerAdapter(FragmentManager fm, Context context) {
 
     super(fm);
-    context = mContext;
+    mContext = context;
   }
 
   @Override
@@ -46,9 +46,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
   public CharSequence getPageTitle(int position) {
     switch (position) {
       case 0:
-        return context.getString(R.string.onroute);
+        return mContext.getString(R.string.onroute);
       case 1:
-        return context.getString(R.string.completed);
+        return mContext.getString(R.string.completed);
     }
     return null;
   }
