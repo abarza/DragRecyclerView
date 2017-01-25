@@ -1,7 +1,6 @@
 package com.za.abar.reorder.recycler.reorderrecyclerview.fragments;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GestureDetectorCompat;
@@ -39,8 +38,6 @@ public class OrdersFragment extends Fragment implements
   private OrderAdapter mOrderAdapter;
   private GestureDetectorCompat mGestureDetectorCompat;
   private ActionMode mActionMode;
-  private int mitemCount;
-  private Context mContext;
   private ActionMode.Callback mCallback = new ActionMode.Callback() {
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -64,7 +61,6 @@ public class OrdersFragment extends Fragment implements
         case R.id.action_clear_all:
           Toast.makeText(getActivity(), "Clear All", Toast.LENGTH_SHORT).show();
           mOrderAdapter.clearSelections();
-          mActionMode.finish();
           break;
         case R.id.select_last_mile:
           Toast.makeText(getActivity(), "Just last mile shipments", Toast.LENGTH_SHORT).show();
@@ -173,7 +169,7 @@ public class OrdersFragment extends Fragment implements
   private void removeItemFromList() {
     int position = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).
         findFirstCompletelyVisibleItemPosition();
-    Toast.makeText(mContext, "Item removed", Toast.LENGTH_SHORT).show();
+    Toast.makeText(getActivity(), "Item removed", Toast.LENGTH_SHORT).show();
     mOrderAdapter.removeData(position);
   }
 

@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.za.abar.reorder.recycler.reorderrecyclerview.R;
 import com.za.abar.reorder.recycler.reorderrecyclerview.models.OrderData;
-import com.za.abar.reorder.recycler.reorderrecyclerview.multiselect_utilities.MultiSelector;
-import com.za.abar.reorder.recycler.reorderrecyclerview.multiselect_utilities.SwappingHolder;
 import com.za.abar.reorder.recycler.reorderrecyclerview.reorder_utilities.ItemTouchHelperViewHolder;
 
 import static android.support.v4.content.ContextCompat.getColor;

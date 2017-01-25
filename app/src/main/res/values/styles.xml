@@ -26,7 +26,7 @@
     <item name="background">@color/colorPrimary</item>
   </style>
 
-  <style name="ActionBarThemeOverlay" parent="Theme.AppCompat.Light">
+  <style name="ActionBarThemeOverlay" parent="Theme.AppCompat.Light.DarkActionBar">
     <item name="android:textColorPrimary">#fff</item>
     <item name="colorControlNormal">#fff</item>
     <item name="colorControlHighlight">#3fff</item>
