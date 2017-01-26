@@ -6,6 +6,10 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="windowActionModeOverlay">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="actionModeStyle">@style/LStyled.ActionMode</item>
   </style>
 
   <style name="AppTheme.NoActionBar">
@@ -16,5 +20,25 @@
   <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
   <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+  <!-- ActionMode -->
+  <style name="LStyled.ActionMode" parent="@style/Widget.AppCompat.ActionMode">
+    <item name="background">@color/colorPrimary</item>
+  </style>
+
+  <style name="ActionBarThemeOverlay" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="android:textColorPrimary">#fff</item>
+    <item name="colorControlNormal">#fff</item>
+    <item name="colorControlHighlight">#3fff</item>
+  </style>
+
+  <style name="HeaderBar">
+    <item name="android:background">@color/colorPrimary</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+
+  <style name="ActionBarPopupThemeOverlay" parent="ThemeOverlay.AppCompat.Dark">
+    <item name="android:textColor">#fff</item>
+  </style>
 
 </resources>

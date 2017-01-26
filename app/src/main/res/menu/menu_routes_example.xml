@@ -13,4 +13,11 @@
       android:orderInCategory="100"
       android:title="Reordenar"
       app:showAsAction="never"/>
+
+
+  <item
+      android:id="@+id/action_batch_management"
+      android:orderInCategory="100"
+      android:title="Gestión Masiva"
+      app:showAsAction="never"/>
 </menu>

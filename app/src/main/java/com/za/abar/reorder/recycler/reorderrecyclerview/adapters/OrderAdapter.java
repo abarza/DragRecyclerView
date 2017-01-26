@@ -1,13 +1,18 @@
 package com.za.abar.reorder.recycler.reorderrecyclerview.adapters;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.za.abar.reorder.recycler.reorderrecyclerview.R;
 import com.za.abar.reorder.recycler.reorderrecyclerview.RouteActivity;
@@ -18,6 +23,7 @@ import com.za.abar.reorder.recycler.reorderrecyclerview.reorder_utilities.ItemTo
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -30,16 +36,21 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
   private ArrayList<OrderData> mOrderdata;
   private final OnStartDragListener mDragStartListener;
   private Activity mActivity;
-  private FrameLayout.LayoutParams mLayoutParams;
-
+  private SparseBooleanArray selectedItems;
 
 
   public OrderAdapter(ArrayList<OrderData> orderdata,
                       OnStartDragListener dragListener, Activity activity) {
 
-    mOrderdata = orderdata;
     mDragStartListener = dragListener;
     mActivity = activity;
+
+    if (orderdata == null) {
+      throw new IllegalArgumentException("Modeldata must no be null");
+    } else {
+      mOrderdata = orderdata;
+      selectedItems = new SparseBooleanArray();
+    }
 
   }
 
@@ -53,9 +64,70 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
 
   }
 
+  /**
+   * Adds and item into the underlying data set
+   * at the position passed into the method.
+   *
+   * @param orderData The item to add to the data set.
+   * @param position  The index of the item to remove.
+   */
+  public void addData(OrderData orderData, int position) {
+    mOrderdata.add(position, orderData);
+    notifyItemInserted(position);
+  }
+
+  /**
+   * Removes the item that currently is at the passed in position from the
+   * underlying data set.
+   *
+   * @param position The index of the item to remove.
+   */
+  public void removeData(int position) {
+    mOrderdata.remove(position);
+    notifyItemRemoved(position);
+  }
+
+  public OrderData getItem(int position) {
+    return mOrderdata.get(position);
+  }
+
   @Override
   public int getItemCount() {
     return mOrderdata.size();
+  }
+
+  public void toggleSelection(int pos) {
+    if (selectedItems.get(pos, false)) {
+      selectedItems.delete(pos);
+    }
+    else {
+      selectedItems.put(pos, true);
+    }
+    notifyItemChanged(pos);
+  }
+
+  public void selectAllItems() {
+    for (int i = 0; i < getItemCount(); i++) {
+      selectedItems.put(i, true);
+      getSelectedItemCount();
+    }
+  }
+
+  public void clearSelections() {
+    selectedItems.clear();
+    notifyDataSetChanged();
+  }
+
+  public int getSelectedItemCount() {
+    return selectedItems.size();
+  }
+
+  public List<Integer> getSelectedItems() {
+    List<Integer> items = new ArrayList<>(selectedItems.size());
+    for (int i = 0; i < selectedItems.size(); i++) {
+      items.add(selectedItems.keyAt(i));
+    }
+    return items;
   }
 
 
@@ -76,16 +148,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
   public void onBindViewHolder(final OrderHolder holder, final int position) {
 
     final OrderData routeData = mOrderdata.get(position);
+
     holder.updateUI(routeData);
-    mLayoutParams = new FrameLayout.LayoutParams(FrameLayout
+    FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout
         .LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 
 
     if (mActivity instanceof RouteActivity) {
       if (((RouteActivity) mActivity).isSortEnabled) {
         holder.mReorder.setVisibility(View.VISIBLE);
-        mLayoutParams.setMargins(15, 0, 60, 0);
-        holder.mCardView.setLayoutParams(mLayoutParams);
+        layoutParams.setMargins(15, 0, 60, 0);
+        holder.mCardView.setLayoutParams(layoutParams);
         // Start a drag whenever the handle view it touched
         holder.itemView.setOnTouchListener(new View.OnTouchListener() {
           @Override
@@ -105,25 +178,28 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
             return false;
           }
         });
-        mLayoutParams.setMargins(15, 0, 15, 0);
-        holder.mCardView.setLayoutParams(mLayoutParams);
+        layoutParams.setMargins(15, 0, 15, 0);
+        holder.mCardView.setLayoutParams(layoutParams);
 
+      }
+
+      holder.itemView.setActivated(selectedItems.get(position, false));
+
+      if (holder.mCardView.isActivated()) {
+        holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(holder.mCardView.getContext(), R.color
+            .light_gray));
+        holder.mReorder.setVisibility(View.VISIBLE);
+        holder.mReorder.setImageResource(R.drawable.ic_select_all);
+      } else {
+        holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(holder.mCardView.getContext(), R.color
+            .white));
+        holder.mReorder.setVisibility(View.GONE);
       }
 
     }
 
-    holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-      @Override
-      public boolean onLongClick(View v) {
-        //select item on long click
 
-        return false;
-      }
-    });
-
-
-
-}
+  }
 
 
 }

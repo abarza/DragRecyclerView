@@ -4,7 +4,14 @@
   <!-- TODO: Remove or change this placeholder text -->
   <string name="title_activity_route_example">RouteExample</string>
   <string name="title_activity_routes_example">RoutesExample</string>
-  <string name="onroute" translatable="false">Pendiente</string>
+  <string name="onroute">Pendiente</string>
   <string name="completed">Completado</string>
   <string name="action_settings">Ajustes</string>
+  <string name="action_select_all">Seleccionar todo</string>
+  <string name="action_clear_selection">Limpiar selección</string>
+  <string name="selection_text">%1$d seleccionados</string>
+  <string name="select_all">Seleccionar todo</string>
+  <string name="select_last_mile">Última milla</string>
+  <string name="select_trunk">Troncales</string>
+  <string name="selected_shipments">Despachos seleccionados</string>
 </resources>
