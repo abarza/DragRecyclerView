@@ -3,8 +3,10 @@ package com.za.abar.reorder.recycler.reorderrecyclerview.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,12 +41,14 @@ public class OrdersFragment extends Fragment implements
   private OrderAdapter mOrderAdapter;
   private GestureDetectorCompat mGestureDetectorCompat;
   private ActionMode mActionMode;
+  private FloatingActionButton mFab;
   private ActionMode.Callback mCallback = new ActionMode.Callback() {
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
       // Inflate a menu resource providing context menu items
       MenuInflater inflater = mode.getMenuInflater();
       inflater.inflate(R.menu.batch_management_menu, menu);
+      processItems();
       return true;
     }
 
@@ -57,18 +61,22 @@ public class OrdersFragment extends Fragment implements
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
       switch (item.getItemId()) {
         case R.id.action_select_all:
-          Toast.makeText(getActivity(), "Select All", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getActivity(), R.string.action_select_all, Toast.LENGTH_SHORT).show();
+          mOrderAdapter.selectAllItems();
+          String title = String.format(getResources().getString(R.string.selection_text), mOrderAdapter
+              .getSelectedItemCount());
+          mActionMode.setTitle(title);
           return true;
         case R.id.action_clear_all:
-          Toast.makeText(getActivity(), "Clear All", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getActivity(), R.string.action_clear_selection, Toast.LENGTH_SHORT).show();
           mOrderAdapter.clearSelections();
           mActionMode.finish();
           return true;
         case R.id.select_last_mile:
-          Toast.makeText(getActivity(), "Just last mile shipments", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getActivity(), R.string.select_last_mile, Toast.LENGTH_SHORT).show();
           return true;
         case R.id.select_trunk:
-          Toast.makeText(getActivity(), "Just trunk shipments", Toast.LENGTH_SHORT).show();
+          Toast.makeText(getActivity(), R.string.select_trunk, Toast.LENGTH_SHORT).show();
           return true;
         default:
           return false;
@@ -81,6 +89,32 @@ public class OrdersFragment extends Fragment implements
       mOrderAdapter.clearSelections();
     }
   };
+
+  public void processItems() {
+    mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+    mFab.setImageResource(R.drawable.ic_send);
+    if (mOrderAdapter.getSelectedItemCount() > 0) {
+      mFab.setVisibility(View.VISIBLE);
+      mFab.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+          builder.setTitle(R.string.selected_shipments);
+          builder.setMessage(mOrderAdapter.getSelectedItems().toString());
+          builder.setCancelable(true);
+          builder.create();
+          builder.show();
+          mOrderAdapter.clearSelections();
+          mActionMode.finish();
+          mFab.setVisibility(View.GONE);
+        }
+      });
+    } else {
+      mFab.setVisibility(View.GONE);
+    }
+
+
+  }
 
   public OrdersFragment() {
     // Required empty public constructor

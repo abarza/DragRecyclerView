@@ -1,10 +1,9 @@
 package com.za.abar.reorder.recycler.reorderrecyclerview.adapters;
 
 import android.app.Activity;
-import android.content.Context;
-import android.support.v4.view.GestureDetectorCompat;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -12,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.za.abar.reorder.recycler.reorderrecyclerview.R;
 import com.za.abar.reorder.recycler.reorderrecyclerview.RouteActivity;
@@ -35,7 +35,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
   private ArrayList<OrderData> mOrderdata;
   private final OnStartDragListener mDragStartListener;
   private Activity mActivity;
-  private FrameLayout.LayoutParams mLayoutParams;
   private SparseBooleanArray selectedItems;
 
 
@@ -106,6 +105,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
     notifyItemChanged(pos);
   }
 
+  public void selectAllItems() {
+    for (int i = 0; i < getItemCount(); i++) {
+      selectedItems.put(i, true);
+      getSelectedItemCount();
+    }
+  }
+
   public void clearSelections() {
     selectedItems.clear();
     notifyDataSetChanged();
@@ -143,15 +149,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
     final OrderData routeData = mOrderdata.get(position);
 
     holder.updateUI(routeData);
-    mLayoutParams = new FrameLayout.LayoutParams(FrameLayout
+    FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout
         .LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 
 
     if (mActivity instanceof RouteActivity) {
       if (((RouteActivity) mActivity).isSortEnabled) {
         holder.mReorder.setVisibility(View.VISIBLE);
-        mLayoutParams.setMargins(15, 0, 60, 0);
-        holder.mCardView.setLayoutParams(mLayoutParams);
+        layoutParams.setMargins(15, 0, 60, 0);
+        holder.mCardView.setLayoutParams(layoutParams);
         // Start a drag whenever the handle view it touched
         holder.itemView.setOnTouchListener(new View.OnTouchListener() {
           @Override
@@ -171,8 +177,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
             return false;
           }
         });
-        mLayoutParams.setMargins(15, 0, 15, 0);
-        holder.mCardView.setLayoutParams(mLayoutParams);
+        layoutParams.setMargins(15, 0, 15, 0);
+        holder.mCardView.setLayoutParams(layoutParams);
 
       }
 

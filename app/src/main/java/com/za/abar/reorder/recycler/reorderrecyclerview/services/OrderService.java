@@ -50,7 +50,7 @@ public class OrderService {
         "Las Condes",
         null, "#342342", OrderData.OrderMode
         .PICKUP, true, true, true, false));
-    list.add(new OrderData(OrderData.status.PARTIALLY_DELIVERED, "245363223", "Andres Colonia", "Alonso de " +
+/*    list.add(new OrderData(OrderData.status.PARTIALLY_DELIVERED, "245363223", "Andres Colonia", "Alonso de " +
         "Córdova 5670, OF 1504, " +
         "Las Condes",
         "Pudahuel", null, OrderData.OrderMode
@@ -65,7 +65,7 @@ public class OrderService {
             "Córdova 5670, OF 1504, " +
             "Las Condes",
         null, "#342342", OrderData.OrderMode
-        .DEFAULT, false, false, true, false));
+        .DEFAULT, false, false, true, false));*/
 
 
     return list;
