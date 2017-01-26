@@ -19,6 +19,7 @@ public class RouteActivity extends AppCompatActivity {
 
   private static final String TAG = RouteActivity.class.getSimpleName();
   public boolean isSortEnabled = false;
+  public boolean isBatchEnabled = false;
   private OrderAdapter mOrderAdapter;
   private FloatingActionButton mFab;
 
@@ -85,10 +86,16 @@ public class RouteActivity extends AppCompatActivity {
         }
         mFab.setVisibility(View.VISIBLE);
         mFab.setImageResource(R.drawable.ic_reorder);
-
         break;
+      case R.id.action_batch_management:
+        isBatchEnabled = true;
+        if (mOrderAdapter !=null) {
+          mOrderAdapter.notifyDataSetChanged();
+        }
+        break;
+      default:
+        return true;
     }
-
 
     return super.onOptionsItemSelected(item);
   }

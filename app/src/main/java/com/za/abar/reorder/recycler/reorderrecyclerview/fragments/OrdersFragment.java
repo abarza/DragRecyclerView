@@ -1,9 +1,11 @@
 package com.za.abar.reorder.recycler.reorderrecyclerview.fragments;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
@@ -33,8 +35,7 @@ import com.za.abar.reorder.recycler.reorderrecyclerview.services.OrderService;
  * Created by abarza on 28-12-16.
  */
 public class OrdersFragment extends Fragment implements
-    OnStartDragListener, RecyclerView.OnItemTouchListener,
-    View.OnClickListener, View.OnLongClickListener {
+    OnStartDragListener, RecyclerView.OnItemTouchListener, View.OnClickListener {
   public static final String TAG = OrdersFragment.class.getSimpleName();
   private ItemTouchHelper mItemTouchHelper;
   private RecyclerView mRecyclerView;
@@ -71,6 +72,7 @@ public class OrdersFragment extends Fragment implements
           Toast.makeText(getActivity(), R.string.action_clear_selection, Toast.LENGTH_SHORT).show();
           mOrderAdapter.clearSelections();
           mActionMode.finish();
+          mFab.setVisibility(View.GONE);
           return true;
         case R.id.select_last_mile:
           Toast.makeText(getActivity(), R.string.select_last_mile, Toast.LENGTH_SHORT).show();
@@ -91,9 +93,10 @@ public class OrdersFragment extends Fragment implements
   };
 
   public void processItems() {
-    mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-    mFab.setImageResource(R.drawable.ic_send);
-    if (mOrderAdapter.getSelectedItemCount() > 0) {
+
+    if (mOrderAdapter.getSelectedItems() != null) {
+      mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+      mFab.setImageResource(R.drawable.ic_send);
       mFab.setVisibility(View.VISIBLE);
       mFab.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -101,7 +104,13 @@ public class OrdersFragment extends Fragment implements
           AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
           builder.setTitle(R.string.selected_shipments);
           builder.setMessage(mOrderAdapter.getSelectedItems().toString());
-          builder.setCancelable(true);
+          builder.setCancelable(false);
+          builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              dialog.cancel();
+            }
+          });
           builder.create();
           builder.show();
           mOrderAdapter.clearSelections();
@@ -132,6 +141,8 @@ public class OrdersFragment extends Fragment implements
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setHasOptionsMenu(true);
+
+
 
   }
 
@@ -184,6 +195,12 @@ public class OrdersFragment extends Fragment implements
     mGestureDetectorCompat = new GestureDetectorCompat(getActivity(), new
         RecyclerViewDemoOnGestureListener
         ());
+
+    if (((RouteActivity) getActivity()).isBatchEnabled) {
+      // Start the CAB using the ActionMode.Callback defined above
+      mActionMode = ((RouteActivity) getActivity()).startSupportActionMode(mCallback);
+    }
+
 
   }
 
@@ -241,17 +258,11 @@ public class OrdersFragment extends Fragment implements
 
   @Override
   public void onClick(View v) {
-    if (mActionMode != null) {
+    if (mActionMode != null || !((RouteActivity) getActivity()).isSortEnabled) {
       int idx = mRecyclerView.indexOfChild(v);
       myToggleSelection(idx);
     }
 
-  }
-
-  @Override
-  public boolean onLongClick(View v) {
-    mActionMode = ((RouteActivity) getActivity()).startSupportActionMode(mCallback);
-    return true;
   }
 
   private class RecyclerViewDemoOnGestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -264,7 +275,7 @@ public class OrdersFragment extends Fragment implements
 
     public void onLongPress(MotionEvent e) {
       View view = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
-      if (mActionMode != null) {
+      if (mActionMode != null || ((RouteActivity) getActivity()).isSortEnabled) {
         return;
       }
       // Start the CAB using the ActionMode.Callback defined above
@@ -272,6 +283,7 @@ public class OrdersFragment extends Fragment implements
       int idx = mRecyclerView.indexOfChild(view);
       myToggleSelection(idx);
       super.onLongPress(e);
+
     }
   }
 }

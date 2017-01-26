@@ -1,6 +1,7 @@
 package com.za.abar.reorder.recycler.reorderrecyclerview.adapters;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
@@ -183,6 +184,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> implements
       }
 
       holder.itemView.setActivated(selectedItems.get(position, false));
+
+      if (holder.mCardView.isActivated()) {
+        holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(holder.mCardView.getContext(), R.color
+            .light_gray));
+        holder.mReorder.setVisibility(View.VISIBLE);
+        holder.mReorder.setImageResource(R.drawable.ic_select_all);
+      } else {
+        holder.mCardView.setCardBackgroundColor(ContextCompat.getColor(holder.mCardView.getContext(), R.color
+            .white));
+        holder.mReorder.setVisibility(View.GONE);
+      }
 
     }
 
